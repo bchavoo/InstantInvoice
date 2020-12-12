@@ -12,13 +12,12 @@ const Start  = ({ navigation }: any) =>{
   return (
     <View style={styles.main}>
       <Header
-          leftComponent={{ icon: 'menu', color: '#fff', onPress: () => alert('Menu coming soon!'), }}
           centerComponent={{ text: 'Instant Invoice', style: { color: '#fff', fontSize: 25 } }}
           rightComponent={{ icon: 'home', color: '#fff', onPress: () => alert('You are already home!') }}
           backgroundColor="#0db512"
         />
       <Text style={styles.text}>Welcome to Instant Invoice!</Text>
-      <Text style={styles.textSpanish}>¡Bienvenido a Instant Invoice!</Text>
+      <Text style={styles.subtext}>¡Bienvenido a Instant Invoice!</Text>
       <Text style={styles.heading}>Press below for English:</Text>
       <TouchableOpacity 
         style={styles.buttonContainer}
@@ -67,14 +66,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  subtext: {
+    fontSize: 25,
+    paddingBottom: '15%',
+    textAlign: 'center',
+  },
   text: {
     fontSize: 32,
     paddingVertical: '2.5%',
-    textAlign: 'center',
-  },
-  textSpanish: {
-    fontSize: 25,
-    paddingBottom: '15%',
     textAlign: 'center',
   },
 });
