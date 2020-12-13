@@ -6,7 +6,7 @@ import { Header } from 'react-native-elements';
 const Start  = ({ navigation }: any) =>{
 
   const onPressHandler = () => {
-    navigation.navigate('InvoiceCreationEnglish')
+    navigation.navigate('CustomerInformation')
   }
 
   return (

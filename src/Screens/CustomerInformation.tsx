@@ -2,40 +2,57 @@ import { ContactsListWrapper } from 'expo-contacts-wrapper';
 import ContactsPicker from 'react-native-contacts-chooser';
 
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Header } from 'react-native-elements';
 import { selectContact, selectContactPhone } from 'react-native-select-contact';
 
-const InvoiceCreatinEnglish = ({ navigation }: any) => {
+const CustomerInformation = ({ navigation }: any) => {
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [address, setAddress] = useState('');
+
+  const onChangeFirstName = (firstName:string) => {
+    setFirstName(firstName);
+  }
+
+  const onChangeLastName = (lastName:string) => {
+    setLastName(lastName);
+  }
+
+  const onChangePhoneNumber = (phoneNumber:string) => {
+    setPhoneNumber(phoneNumber);
+  }
+
   const onPressHome = () => {
     navigation.navigate('Start')
   }
 
-  const onPressGetContact = () => {
-    const phone = getPhoneNumber();
-    console.log(phone);
+  const onPressNext = () => {
+    navigation.navigate('CustomerAddress')
   }
 
-  const finishSelectingContacts = (selectedContacts) => {
-    console.log("Selected Contacts", selectedContacts);
+  const finishSelectingContact = (selectedContact) => {
+    if(selectedContact[1]) {
+      alert('Please only select one contact!');
+    } else if(selectedContact[0]) {
+      setFirstName(selectedContact[0].firstName);
+      setLastName(selectedContact[0].lastName);
+      setPhoneNumber(selectedContact[0].phoneNumbers[0].number);
+      if(selectedContact[0].addresses) {
+        const fullAddress = selectedContact[0].addresses[0].street + ', ' + selectedContact[0].addresses[0].city + ', ' + selectedContact[0].addresses[0].region;
+        setAddress(fullAddress);
+      } else {
+        setAddress('');
+      }
+    } else {
+      alert('Select a contact!');
+    }
   };
 
-  function getPhoneNumber() {
-    return selectContactPhone()
-      .then(selection => {
-        if (!selection) {
-          return null;
-        }
-        
-        let { contact, selectedPhone } = selection;
-        console.log(`Selected ${selectedPhone.type} phone number ${selectedPhone.number} from ${contact.name}`);
-        return selectedPhone.number;
-      })
-      .catch((error) => {
-        console.error(error);
-      });  
-}
+
 
   return (
     <View style={styles.main}>
@@ -53,43 +70,37 @@ const InvoiceCreatinEnglish = ({ navigation }: any) => {
         <Text style={styles.buttonText}>Import Contact</Text>
       </TouchableOpacity> */}
       <View style={styles.contactInput}>
-        <ContactsListWrapper onFinish={finishSelectingContacts} />
+        <ContactsListWrapper onFinish={finishSelectingContact} />
       </View>
       <View style={{ height: 15}}/>
       <TextInput
         style={styles.input}
+        value={firstName}
+        onChangeText={onChangeFirstName}
         placeholder='First Name'
         autoCapitalize='none'
         maxLength={15}
       />
       <TextInput
         style={styles.input}
+        value={lastName}
+        onChangeText={onChangeLastName}
         placeholder='Last Name'
         autoCapitalize='none'
         maxLength={15}
       />
       <TextInput
         style={styles.input}
+        value={phoneNumber}
+        onChangeText={onChangePhoneNumber}
         placeholder='Phone Number'
         autoCapitalize='none'
         maxLength={10}
       />
-      <TextInput
-        style={styles.input}
-        placeholder='Address'
-        autoCapitalize='none'
-        maxLength={50}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder='Email'
-        autoCapitalize='none'
-        maxLength={25}
-      />
-      <View style={{ height: 80}}/>
+      <View style={{ height: 50}}/>
       <TouchableOpacity 
         style={styles.nextButton}
-        onPress={() => alert('Button pressed!')}
+        onPress={() => onPressNext()}
       >
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
@@ -120,7 +131,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderRadius: 6,
     borderWidth: 1,
-    height: 150,
+    height: 250,
     padding: 5,
     width: '80%',
   },
@@ -173,4 +184,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InvoiceCreatinEnglish;
+export default CustomerInformation;
