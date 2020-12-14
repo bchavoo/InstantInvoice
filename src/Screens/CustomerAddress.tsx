@@ -46,6 +46,9 @@ const CustomerAddress = ({ navigation }: any) => {
 
      let result = await Location.reverseGeocodeAsync(LOCATION);
       console.log(result);
+      setAddress(result[0].name);
+      setCityState(result[0].city + ', ' + result[0].region);
+      setZip(result[0].postalCode);
    } catch (error) {
      console.error(error);
    }
