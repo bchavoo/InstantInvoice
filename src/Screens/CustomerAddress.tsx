@@ -37,8 +37,18 @@ const CustomerAddress = ({ navigation }: any) => {
     navigation.navigate('CustomerInformation')
   }
 
-  const onPressGetAddress = () => {
-   onChangeAddress('hi');
+  const onPressGetAddress = async () => {
+   try {
+     const LOCATION = {
+       latitude: latitude,
+       longitude: longitude
+     }
+
+     let result = await Location.reverseGeocodeAsync(LOCATION);
+      console.log(result);
+   } catch (error) {
+     console.error(error);
+   }
   }
 
   useEffect(() => {
@@ -48,12 +58,15 @@ const CustomerAddress = ({ navigation }: any) => {
         alert('Permission to access location was denied');
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
-      setLatitude(+location.coords.latitude);
-      setLongitude(+location.coords.longitude);
-      setAccuracy(+location.coords.accuracy);
-      
+      try {
+        let location = await Location.getCurrentPositionAsync({});
+        console.log(location);
+        setLatitude(+location.coords.latitude);
+        setLongitude(+location.coords.longitude);
+        setAccuracy(+location.coords.accuracy);
+      } catch (error) {
+        console.error(error);
+      }
     })();
   }, []);
 
@@ -71,7 +84,7 @@ const CustomerAddress = ({ navigation }: any) => {
         style={styles.input}
         value={address}
         onChangeText={onChangeAddress}
-        placeholder='Address'
+        placeholder='Street'
         autoCapitalize='none'
         maxLength={30}
       />
