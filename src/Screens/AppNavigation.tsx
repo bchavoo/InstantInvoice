@@ -4,7 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import CustomerInformation from './CustomerInformation';
-import CustomerAddress from './CustomerAddress'
+import CustomerAddress from './CustomerAddress';
+import Products from './Products';
 import Start from './Start';
 
 const Stack = createStackNavigator();
@@ -16,6 +17,7 @@ const AppNavigation = () => {
         <Stack.Screen name="Start" component={Start} />
         <Stack.Screen name="CustomerInformation" component={CustomerInformation} />
         <Stack.Screen name="CustomerAddress" component={CustomerAddress} />
+        <Stack.Screen name="Products" component={Products} />
       </Stack.Navigator>
     </NavigationContainer>
   );

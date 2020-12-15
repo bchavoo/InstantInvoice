@@ -42,6 +42,10 @@ const CustomerAddress = ({ navigation }: any) => {
     navigation.navigate('CustomerInformation')
   }
 
+  const onPressNext = () => {
+    navigation.navigate('Products')
+  }
+
   const onPressMapMarker = async () => {
    try {
      const LOCATION = {
@@ -120,7 +124,7 @@ const CustomerAddress = ({ navigation }: any) => {
       <Text style={styles.warning}>*Address based on GPS location.</Text>
       <TouchableOpacity 
         style={styles.nextButton}
-        onPress={() => alert('Button pressed!')}
+        onPress={() => onPressNext()}
       >
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
