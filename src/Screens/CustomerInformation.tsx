@@ -1,18 +1,14 @@
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ContactsListWrapper } from 'expo-contacts-wrapper';
-import ContactsPicker from 'react-native-contacts-chooser';
-
+import { Header } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Button, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { Header } from 'react-native-elements';
-import { selectContact, selectContactPhone } from 'react-native-select-contact';
 
 const CustomerInformation = ({ navigation }: any) => {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
 
   const onChangeFirstName = (firstName:string) => {
     setFirstName(firstName);
@@ -26,9 +22,18 @@ const CustomerInformation = ({ navigation }: any) => {
     setPhoneNumber(phoneNumber);
   }
 
-  const onPressHome = () => {
-    navigation.navigate('Start')
-  }
+  const onPressHome = () =>
+    Alert.alert(
+      'Are you sure?',
+      'This will erase any current customer data.',
+      [
+        {
+          text: 'Cancel',
+        },
+        { text: 'Yes', onPress: () => navigation.navigate('Start') }
+      ],
+      { cancelable: false }
+    );
 
   const onPressNext = () => {
     navigation.navigate('CustomerAddress')
@@ -36,19 +41,13 @@ const CustomerInformation = ({ navigation }: any) => {
 
   const finishSelectingContact = (selectedContact) => {
     if(selectedContact[1]) {
-      alert('Please only select one contact!');
+      Alert.alert('Oops', 'Please only select one contact!');
     } else if(selectedContact[0]) {
       setFirstName(selectedContact[0].firstName);
       setLastName(selectedContact[0].lastName);
       setPhoneNumber(selectedContact[0].phoneNumbers[0].number);
-      if(selectedContact[0].addresses) {
-        const fullAddress = selectedContact[0].addresses[0].street + ', ' + selectedContact[0].addresses[0].city + ', ' + selectedContact[0].addresses[0].region;
-        setAddress(fullAddress);
-      } else {
-        setAddress('');
-      }
     } else {
-      alert('Select a contact!');
+      Alert.alert('Did you forget?','Please select a contact!');
     }
   };
 
@@ -62,7 +61,7 @@ const CustomerInformation = ({ navigation }: any) => {
           rightComponent={{ icon: 'home', color: '#fff', onPress:() => onPressHome() }}
           backgroundColor='#0db512'
       />
-      <Text style={styles.text}>Customer Information</Text>
+      <Text style={styles.title}>Customer Information</Text>
       {/* <TouchableOpacity 
         style={styles.buttonContainer}
         onPress={() => onPressGetContact()}
@@ -167,19 +166,9 @@ const styles = StyleSheet.create({
     padding: 5,
     width: '50%',
   },
-  placeholderText: {
-    fontSize: 20,
-    paddingTop: '6%',
-    paddingRight: '35%',
-  },
-  text: {
+  title: {
     fontSize: 32,
     paddingVertical: '2.5%',
-    textAlign: 'center',
-  },
-  textSpanish: {
-    fontSize: 25,
-    paddingBottom: '15%',
     textAlign: 'center',
   },
 });

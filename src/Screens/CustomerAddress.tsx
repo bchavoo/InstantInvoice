@@ -1,15 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Header } from 'react-native-elements';
 import { IconButton } from 'react-native-paper';
-import { Button, Header } from 'react-native-elements';
-import Icon from 'react-native-vector-icons';
+import { StatusBar } from 'expo-status-bar';
 import * as Location from 'expo-location';
-
+import React, { useEffect, useState } from 'react';
 
 const CustomerAddress = ({ navigation }: any) => {
 
-  const [accuracy, setAccuracy] = useState(100);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [address, setAddress] = useState('');
@@ -28,16 +25,24 @@ const CustomerAddress = ({ navigation }: any) => {
     setZip(zip);
   }
 
-  const onPressHome = () => {
-    //Add a are you sure alert? It will reset customer information
-    navigation.navigate('Start')
-  }
+  const onPressHome = () =>
+    Alert.alert(
+      "Are you sure?",
+      "This will erase any current customer data.",
+      [
+        {
+          text: "Cancel",
+        },
+        { text: "Yes", onPress: () => navigation.navigate('Start') }
+      ],
+      { cancelable: false }
+    );
 
   const onPressBack = () => {
     navigation.navigate('CustomerInformation')
   }
 
-  const onPressGetAddress = async () => {
+  const onPressMapMarker = async () => {
    try {
      const LOCATION = {
        latitude: latitude,
@@ -66,7 +71,6 @@ const CustomerAddress = ({ navigation }: any) => {
         console.log(location);
         setLatitude(+location.coords.latitude);
         setLongitude(+location.coords.longitude);
-        setAccuracy(+location.coords.accuracy);
       } catch (error) {
         console.error(error);
       }
@@ -81,7 +85,7 @@ const CustomerAddress = ({ navigation }: any) => {
           rightComponent={{ icon: 'home', color: '#fff', onPress:() => onPressHome() }}
           backgroundColor='#0db512'
       />
-      <Text style={styles.text}>Customer Information</Text>
+      <Text style={styles.title}>Customer Address</Text>
       <View style={{ height: 15}}/>
       <TextInput
         style={styles.input}
@@ -107,13 +111,13 @@ const CustomerAddress = ({ navigation }: any) => {
         autoCapitalize='none'
         maxLength={12}
       />
-      <TouchableOpacity 
-        style={styles.nextButton}
-        onPress={() => onPressGetAddress()}
-      >
-        <Text style={styles.buttonText}>Get Address</Text>
-      </TouchableOpacity>
-      <View style={{ height: 50}}/>
+      <IconButton
+        icon="map-marker"
+        color='red'
+        size={75}
+        onPress={() => onPressMapMarker()}
+      />
+      <Text style={styles.warning}>*Address based on GPS location.</Text>
       <TouchableOpacity 
         style={styles.nextButton}
         onPress={() => alert('Button pressed!')}
@@ -126,31 +130,10 @@ const CustomerAddress = ({ navigation }: any) => {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#0db512',
-    borderColor: 'black',
-    borderRadius: 8,
-    borderWidth: 2,
-    height: '8%',
-    justifyContent: 'center',
-    padding: 5,
-    width: '50%',
-  },
   buttonText: {
     alignSelf: 'center',
     color: 'white',
     fontSize: 27,
-  },
-  heading: {
-    fontSize: 20,
-    paddingBottom: '1%',
-    paddingTop: '15%',
-  },
-  icon: {
-    height: 250,
-    width: 250,
   },
   input: {
     backgroundColor: 'white',
@@ -179,20 +162,15 @@ const styles = StyleSheet.create({
     padding: 5,
     width: '50%',
   },
-  placeholderText: {
-    fontSize: 20,
-    paddingTop: '6%',
-    paddingRight: '35%',
-  },
-  text: {
+  title: {
     fontSize: 32,
     paddingVertical: '2.5%',
     textAlign: 'center',
   },
-  textSpanish: {
-    fontSize: 25,
-    paddingBottom: '15%',
-    textAlign: 'center',
+  warning: {
+    color: 'red',
+    fontSize: 14,
+    paddingBottom: '40%',
   },
 });
 

@@ -1,7 +1,7 @@
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Header } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Header } from 'react-native-elements';
 
 const Start  = ({ navigation }: any) =>{
 
@@ -13,7 +13,7 @@ const Start  = ({ navigation }: any) =>{
     <View style={styles.main}>
       <Header
           centerComponent={{ text: 'Instant Invoice', style: { color: '#fff', fontSize: 25 } }}
-          rightComponent={{ icon: 'home', color: '#fff', onPress: () => alert('You are already home!') }}
+          rightComponent={{ icon: 'home', color: '#fff', onPress: () => Alert.alert('Oops', 'You are already home!') }}
           backgroundColor="#0db512"
         />
       <Text style={styles.text}>Welcome to Instant Invoice!</Text>
