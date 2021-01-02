@@ -8,6 +8,10 @@ import ProductList from '../Product/ProductList.jsx'
 
 const Products = ({ navigation }: any) => {
 
+  const [itemName, setName] = useState('');
+  const [itemPrice, setPrice] = useState('');
+
+
   const onPressHome = () =>
     Alert.alert(
       "Are you sure?",
@@ -34,7 +38,26 @@ const Products = ({ navigation }: any) => {
           backgroundColor='#0db512'
       />
       <Text style={styles.title}>Products</Text>
-      <View style={{ height: 15}}/>
+      <TextInput
+        style={styles.input}
+        value={itemName}
+        placeholder='Item Name'
+        autoCapitalize='none'
+        maxLength={30}
+      />
+      <TextInput
+        style={styles.input}
+        value={itemPrice}
+        placeholder='Price'
+        autoCapitalize='none'
+        maxLength={30}
+      />
+      <IconButton
+        icon='tag-plus'
+        color='#0db512'
+        size={50}
+        onPress={() => alert('Button Pressed!')}
+      />
       <ProductList />
       <View style={{ height: 15}}/>
       <TouchableOpacity 
@@ -49,6 +72,22 @@ const Products = ({ navigation }: any) => {
 }
 
 const styles = StyleSheet.create({
+  addButton: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: '#0db512',
+    borderColor: 'black',
+    borderRadius: 100,
+    borderWidth: 2,
+    height: '5%',
+    justifyContent: 'center',
+    width: '8%',
+  },
+  addButtonText: {
+    alignSelf: 'center',
+    color: 'white',
+    fontSize: 30,
+  },
   buttonText: {
     alignSelf: 'center',
     color: 'white',
@@ -59,9 +98,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 20,
     height: '5%',
-    margin: '4%',
+    marginBottom: '3%',
     paddingHorizontal: '2%',
-    width: '85%',
+    width: '65%',
   },
   main: {
     alignItems: 'center',

@@ -39,15 +39,17 @@ class ProductList extends Component{
 
 const styles = StyleSheet.create ({
   container: {
-     padding: 10,
-     marginTop: 3,
-     backgroundColor: '#d9f9b1',
-     borderWidth: 2,
-     alignItems: 'center',
+    alignItems: 'center',
+    backgroundColor: '#d9f9b1',
+    borderRadius: 30,
+    borderWidth: 1,
+    marginBottom: 7.5,
+    marginTop: 3,
+    padding: 10,
   },
   text: {
-     color: '#4f603c',
-     fontSize: 25,
+    color: '#4f603c',
+    fontSize: 25,
   }
 });
 
