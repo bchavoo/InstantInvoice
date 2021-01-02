@@ -4,6 +4,7 @@ import { IconButton } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
+import ProductList from '../Product/ProductList.jsx'
 
 const Products = ({ navigation }: any) => {
 
@@ -33,6 +34,8 @@ const Products = ({ navigation }: any) => {
           backgroundColor='#0db512'
       />
       <Text style={styles.title}>Products</Text>
+      <View style={{ height: 15}}/>
+      <ProductList />
       <View style={{ height: 15}}/>
       <TouchableOpacity 
         style={styles.nextButton}
