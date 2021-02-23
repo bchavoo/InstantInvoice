@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 class ProductList extends Component{
   state = {
@@ -19,7 +19,7 @@ class ProductList extends Component{
 
   render() {
     return (
-      <View>
+      <ScrollView style={styles.main}>
         {
           this.state.products.map((item, index) => (
             <TouchableOpacity
@@ -32,7 +32,7 @@ class ProductList extends Component{
             </TouchableOpacity>
           ))
         }
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -46,6 +46,9 @@ const styles = StyleSheet.create ({
     marginBottom: 7.5,
     marginTop: 3,
     padding: 10,
+  },
+  main: {
+    height: '30%',
   },
   text: {
     color: '#4f603c',
